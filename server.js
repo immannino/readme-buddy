@@ -35,7 +35,7 @@ app.get("/img/:name", async (req, res) => {
   const name = req.params.name;
 
   switch (name) {
-    case 'page_count.svg':
+    case 'page_count':
       handlePageCount(res);
       break;
     case 'image.png':
@@ -72,7 +72,10 @@ async function handlePageCount(res) {
 
   const file = getPageCountImage(count);
   
-  res.setHeader('Content-Type', 'image/svg+xml');
+  res.set({
+    'content-type': 'image/svg+xml',
+    'cache-control': 'max-age=0, no-cache, no-store, must-revalidate'
+  })
 
   return res.end(file);
 }
